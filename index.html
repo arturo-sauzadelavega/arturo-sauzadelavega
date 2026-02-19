@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Name | Academic Portfolio — Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --teal: #3dbdb8; --teal-dark: #2a9d96; --teal-light: #e8f8f7;
+  --rose: #c97b8a; --gold: #e8a838; --navy: #1a2a3a; --dark: #1c2b3a;
+  --mid: #4a5568; --light: #718096; --bg: #f0f4f8; --white: #ffffff;
+  --border: #e2e8f0; --shadow: 0 4px 24px rgba(26,42,58,0.08);
+  --shadow-hover: 0 8px 40px rgba(26,42,58,0.15);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--navy); line-height: 1.7; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; transition: color .2s; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+/* NAV */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .9rem 2.5rem;
+  background: rgba(26,42,58,0.95); backdrop-filter: blur(12px);
+  transition: box-shadow .3s;
+}
+.navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.3); }
+.nav-brand { display: flex; align-items: center; gap: .7rem; }
+.nav-initials {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--teal); color: #fff;
+  font-family: var(--font-display); font-size: 1rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-name { color: #fff; font-size: .95rem; }
+.nav-links { display: flex; list-style: none; gap: .3rem; }
+.nav-link {
+  color: rgba(255,255,255,.7); font-size: .83rem; letter-spacing: .04em;
+  text-transform: uppercase; padding: .4rem .8rem; border-radius: 4px;
+  transition: color .2s, background .2s;
+}
+.nav-link:hover, .nav-link.active { color: #fff; background: rgba(61,189,184,.2); }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+.hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; }
+
+/* SECTIONS */
+.section { padding: 6rem 0; min-height: 100vh; display: flex; align-items: center; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; width: 100%; }
+.section-title {
+  font-family: var(--font-display); font-size: 3rem; font-weight: 300;
+  color: var(--dark); text-align: center; margin-bottom: 3rem; letter-spacing: -.01em;
+}
+.section-subtitle { text-align: center; color: var(--light); margin-top: -2rem; margin-bottom: 2.5rem; font-size: .95rem; }
+
+/* HERO */
+.hero-section {
+  position: relative; overflow: hidden;
+  background: linear-gradient(135deg, #e8f4f3 0%, #c8e8e6 40%, #a8d8d5 100%);
+  flex-direction: column; justify-content: center; min-height: 100vh;
+}
+.hero-bg { position: absolute; inset: 0; pointer-events: none; }
+.hero-mesh {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 15% 50%, rgba(61,189,184,.2) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 20%, rgba(61,189,184,.12) 0%, transparent 50%);
+}
+.hero-molecules { position: absolute; right: 0; top: 0; width: 55%; height: 100%; opacity: .18; }
+.hero-hexagons { position: absolute; right: 3%; bottom: 5%; opacity: .15; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; width: 100%; }
+.hero-photo-ring {
+  width: 110px; height: 110px; margin: 0 auto 1.5rem;
+  border-radius: 50%; border: 3px solid var(--teal); padding: 4px;
+  box-shadow: 0 0 0 6px rgba(61,189,184,.18);
+}
+.hero-photo-placeholder {
+  width: 100%; height: 100%; border-radius: 50%;
+  background: linear-gradient(135deg, #8ecece, #5ba8a8);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.8); font-size: .75rem;
+}
+.hero-greeting { font-family: var(--font-display); font-size: 3.2rem; font-weight: 300; color: var(--dark); margin-bottom: .4rem; }
+.hero-greeting em { font-style: italic; color: var(--teal-dark); }
+.hero-subtitle { font-size: 1.1rem; color: var(--mid); margin-bottom: .7rem; }
+.hero-description { color: var(--mid); font-size: .95rem; }
+.hero-tags { font-weight: 500; color: var(--dark); }
+.hero-tagline { font-family: var(--font-display); font-style: italic; color: var(--teal-dark); font-size: 1.05rem; margin: .5rem 0 1.8rem; }
+.hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.scroll-arrow { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--teal-dark); animation: bounce 2s infinite; }
+.scroll-arrow svg { width: 28px; height: 28px; }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+/* BUTTONS */
+.btn-primary {
+  display: inline-block; background: var(--navy); color: #fff;
+  padding: .7rem 1.8rem; border-radius: 6px; font-size: .9rem; font-weight: 500;
+  transition: background .2s, transform .2s; cursor: pointer; border: none;
+}
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-block; background: transparent; color: var(--navy);
+  padding: .7rem 1.8rem; border-radius: 6px; font-size: .9rem; font-weight: 500;
+  border: 2px solid var(--navy); transition: all .2s;
+}
+.btn-secondary:hover { background: var(--navy); color: #fff; }
+
+/* ABOUT */
+.about-section { background: #fff; }
+.about-grid { display: grid; grid-template-columns: 220px 1fr; gap: 4rem; align-items: start; }
+.about-photo-frame { width: 180px; height: 180px; border-radius: 12px; border: 3px solid var(--teal); overflow: hidden; margin: 0 auto 1.2rem; }
+.about-photo-placeholder { width:100%; height:100%; background: linear-gradient(135deg, #8ecece, #5ba8a8); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.7); font-size:.85rem; }
+.about-social { display: flex; justify-content: center; gap: .6rem; margin-bottom: .5rem; }
+.social-icon { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:1.5px solid var(--border); color:var(--mid); transition:all .2s; }
+.social-icon svg { width:16px; height:16px; }
+.social-icon:hover { border-color:var(--teal); color:var(--teal); background:var(--teal-light); }
+.about-name { font-family:var(--font-display); font-size:2rem; font-weight:400; margin-bottom:.3rem; }
+.about-position { color:var(--mid); margin-bottom:1.2rem; font-size:.95rem; }
+.teal-link { color:var(--teal-dark); font-weight:500; }
+.teal-link:hover { color:var(--teal); }
+.about-bio { color:var(--mid); line-height:1.75; text-align:justify; margin-bottom:1.5rem; }
+.about-interests { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem; }
+.interest-bubble { width:90px; height:90px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:500; font-size:.85rem; color:var(--dark); }
+.interest-bubble.teal { background:conic-gradient(var(--teal) 72%, var(--border) 0); box-shadow:inset 0 0 0 10px #fff; }
+.interest-bubble.rose { background:conic-gradient(var(--rose) 78%, var(--border) 0); box-shadow:inset 0 0 0 10px #fff; }
+.interest-bubble.gold { background:conic-gradient(var(--gold) 82%, var(--border) 0); box-shadow:inset 0 0 0 10px #fff; }
+.about-awards { display:flex; gap:1.5rem; flex-wrap:wrap; }
+.award-item { text-align:center; min-width:110px; }
+.award-wreath { font-size:1.8rem; margin-bottom:.3rem; }
+.award-title { font-size:.78rem; font-weight:600; line-height:1.3; margin-bottom:.15rem; }
+.award-item.teal .award-title { color:var(--teal-dark); }
+.award-item.rose .award-title { color:var(--rose); }
+.award-item.gold .award-title { color:var(--gold); }
+.award-year { font-size:.8rem; font-weight:500; }
+.award-org { font-size:.75rem; color:var(--light); }
+.btn-resume { margin-top:1rem; font-size:.85rem; padding:.6rem 1.5rem; }
+
+/* EXPERIENCE */
+.experience-section { background: var(--bg); }
+.timeline { display:flex; flex-direction:column; gap:1.5rem; }
+.timeline-item {
+  background:var(--white); border-radius:12px; border-left:4px solid var(--teal);
+  display:flex; align-items:flex-start; gap:1.5rem; padding:1.5rem 1.8rem;
+  box-shadow:var(--shadow); transition:box-shadow .2s;
+}
+.timeline-item:hover { box-shadow:var(--shadow-hover); }
+.timeline-logo { flex-shrink:0; width:80px; text-align:center; }
+.logo-placeholder { width:72px; height:72px; border-radius:8px; background:var(--bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.7rem; color:var(--light); }
+.timeline-content { flex:1; }
+.timeline-header { display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom:.8rem; }
+.timeline-org { font-size:1.05rem; font-weight:600; color:var(--teal-dark); }
+.timeline-role { color:var(--mid); font-size:.92rem; margin-top:.1rem; }
+.timeline-advisor { font-size:.88rem; margin-top:.3rem; }
+.timeline-meta { text-align:right; }
+.timeline-date { display:block; font-size:.88rem; color:var(--mid); }
+.timeline-location { display:block; font-size:.82rem; color:var(--light); }
+.timeline-subhead { font-size:.85rem; font-weight:600; color:var(--mid); margin-bottom:.3rem; margin-top:.6rem; }
+.timeline-list { list-style:disc; padding-left:1.3rem; }
+.timeline-list li { font-size:.88rem; color:var(--mid); line-height:1.6; }
+
+/* RESEARCH */
+.research-section { background:#fff; }
+.research-filter, .pub-filter { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-bottom:2.5rem; }
+.filter-btn { padding:.45rem 1.1rem; border-radius:30px; background:var(--bg); border:1.5px solid var(--border); font-size:.83rem; font-weight:500; color:var(--mid); cursor:pointer; transition:all .2s; }
+.filter-btn:hover, .filter-btn.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+.research-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.5rem; }
+.research-card { background:var(--white); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; transition:box-shadow .2s,transform .2s; border:1px solid var(--border); }
+.research-card:hover { box-shadow:var(--shadow-hover); transform:translateY(-3px); }
+.research-card.hidden { display:none; }
+.research-img-placeholder { width:100%; height:150px; background:linear-gradient(135deg,var(--teal-light),#c8e8e6); display:flex; align-items:center; justify-content:center; color:var(--teal-dark); font-size:.8rem; }
+.research-body { padding:1.2rem; }
+.research-tag-label { display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem; }
+.rtag { font-size:.7rem; font-weight:700; padding:.2rem .5rem; border-radius:4px; letter-spacing:.05em; }
+.rtag.teal { background:var(--teal); color:#fff; }
+.rtag.rose { background:var(--rose); color:#fff; }
+.rtag.gold { background:var(--gold); color:#fff; }
+.research-title { font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--teal-dark); }
+.research-desc { font-size:.84rem; color:var(--mid); line-height:1.6; margin-bottom:1rem; text-align:justify; }
+.research-tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+.pill { background:var(--bg); border:1px solid var(--border); border-radius:20px; padding:.2rem .7rem; font-size:.74rem; color:var(--mid); }
+.btn-read-more { display:inline-block; background:var(--navy); color:#fff; padding:.4rem 1rem; border-radius:6px; font-size:.8rem; font-weight:500; transition:background .2s; }
+.btn-read-more:hover { background:var(--teal-dark); }
+
+/* PUBLICATIONS */
+.publications-section { background:var(--bg); }
+.pub-list { display:flex; flex-direction:column; gap:1.5rem; }
+.pub-card { background:var(--white); border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow); display:flex; align-items:flex-start; gap:1.5rem; padding:1.5rem; transition:box-shadow .2s; }
+.pub-card:hover { box-shadow:var(--shadow-hover); }
+.pub-card.hidden { display:none; }
+.pub-number { flex-shrink:0; width:38px; height:38px; border-radius:50%; background:var(--teal); color:#fff; font-size:.9rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.pub-main { flex:1; }
+.pub-meta-top { text-align:right; margin-bottom:.4rem; }
+.pub-date { font-size:.8rem; color:var(--light); }
+.pub-title { font-family:var(--font-display); font-size:1.1rem; font-weight:600; color:var(--dark); margin-bottom:.4rem; line-height:1.4; }
+.pub-journal { font-size:.85rem; color:var(--teal-dark); margin-bottom:.3rem; }
+.pub-authors { font-size:.82rem; color:var(--mid); margin-bottom:.5rem; }
+.pub-synopsis { font-size:.85rem; color:var(--mid); margin-bottom:1rem; line-height:1.6; }
+.synopsis-label { font-weight:700; color:var(--teal-dark); }
+.pub-actions { display:flex; flex-wrap:wrap; gap:.5rem; }
+.btn-pub { padding:.38rem .9rem; border-radius:20px; font-size:.78rem; font-weight:500; background:var(--bg); border:1.5px solid var(--border); color:var(--mid); cursor:pointer; transition:all .2s; text-decoration:none; display:inline-block; }
+.btn-pub:hover { background:var(--navy); border-color:var(--navy); color:#fff; }
+.btn-pub.btn-takeaway { background:var(--teal-light); border-color:var(--teal); color:var(--teal-dark); }
+.btn-pub.btn-takeaway:hover { background:var(--teal); color:#fff; }
+.btn-pub.btn-readmore { background:var(--navy); border-color:var(--navy); color:#fff; }
+.pub-takeaway { margin-top:.8rem; padding:.8rem 1rem; background:var(--teal-light); border-radius:8px; font-size:.83rem; color:var(--dark); line-height:1.6; }
+.pub-takeaway.hidden { display:none; }
+.pub-img { flex-shrink:0; width:160px; }
+.pub-img-placeholder { width:160px; height:130px; border-radius:8px; background:linear-gradient(135deg,#f0f4f8,#e2e8f0); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--light); font-size:.75rem; text-align:center; line-height:1.4; }
+
+/* BLOG */
+.blog-section { background:#fff; }
+.blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+.blog-card { background:var(--white); border-radius:12px; box-shadow:var(--shadow); overflow:hidden; border:1px solid var(--border); transition:box-shadow .2s,transform .2s; }
+.blog-card:hover { box-shadow:var(--shadow-hover); transform:translateY(-3px); }
+.blog-img-placeholder { width:100%; height:160px; display:flex; align-items:center; justify-content:center; color:var(--light); font-size:.8rem; }
+.blog-body { padding:1.3rem; }
+.blog-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.8rem; }
+.blog-title { font-family:var(--font-display); font-size:1.1rem; font-weight:600; margin-bottom:.6rem; line-height:1.4; }
+.blog-title a { color:var(--dark); }
+.blog-title a:hover { color:var(--teal-dark); }
+.blog-excerpt { font-size:.85rem; color:var(--mid); line-height:1.65; margin-bottom:1rem; }
+.blog-footer { display:flex; justify-content:space-between; align-items:center; }
+.blog-date { font-size:.78rem; color:var(--light); }
+.blog-read-more { font-size:.82rem; color:var(--teal-dark); font-weight:500; }
+
+/* FOOTER */
+.footer { background:var(--dark); color:rgba(255,255,255,.75); padding:3rem 2rem 1.5rem; }
+.footer-inner { max-width:1100px; margin:0 auto; display:flex; gap:4rem; flex-wrap:wrap; border-bottom:1px solid rgba(255,255,255,.1); padding-bottom:2rem; margin-bottom:1.5rem; }
+.footer-col h4 { color:#fff; font-size:.95rem; margin-bottom:1rem; letter-spacing:.05em; }
+.footer-col ul { list-style:none; }
+.footer-col ul li { margin-bottom:.5rem; }
+.footer-col ul li a { font-size:.88rem; transition:color .2s; }
+.footer-col ul li a:hover { color:var(--teal); }
+.footer-col p { font-size:.88rem; display:flex; align-items:center; gap:.4rem; margin-bottom:.5rem; }
+.footer-icon { width:16px; height:16px; flex-shrink:0; }
+.footer-bottom { text-align:center; font-size:.78rem; color:rgba(255,255,255,.4); max-width:1100px; margin:0 auto; }
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .navbar{padding:.8rem 1.2rem;}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(26,42,58,.97);padding:1rem;gap:0;}
+  .nav-links.open{display:flex;}
+  .nav-link{padding:.7rem 1rem;}
+  .hamburger{display:flex;}
+  .section{padding:4rem 0;min-height:auto;}
+  .section-title{font-size:2rem;}
+  .hero-greeting{font-size:2rem;}
+  .about-grid{grid-template-columns:1fr;gap:2rem;}
+  .about-left{text-align:center;}
+  .timeline-item{flex-direction:column;}
+  .timeline-header{flex-direction:column;}
+  .timeline-meta{text-align:left;}
+  .pub-card{flex-direction:column;}
+  .pub-img{width:100%;}
+  .pub-img-placeholder{width:100%;}
+  .footer-inner{flex-direction:column;gap:2rem;}
+}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-content{animation:fadeInUp .8s ease .1s both;}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <span class="nav-initials">YN</span>
+    <span class="nav-name">Your Name, PhD</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="nav-link active">Home</a></li>
+    <li><a href="#about" class="nav-link">About</a></li>
+    <li><a href="#experience" class="nav-link">Experience</a></li>
+    <li><a href="#research" class="nav-link">Research</a></li>
+    <li><a href="#publications" class="nav-link">Publications</a></li>
+    <li><a href="#blog" class="nav-link">Blog</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="section hero-section">
+  <div class="hero-bg">
+    <div class="hero-mesh"></div>
+    <svg class="hero-molecules" viewBox="0 0 700 600" preserveAspectRatio="xMidYMid slice">
+      <g>
+        <circle cx="80" cy="120" r="9" fill="#3dbdb8"/><circle cx="170" cy="70" r="13" fill="#3dbdb8"/><circle cx="250" cy="150" r="6" fill="#3dbdb8"/><circle cx="140" cy="210" r="10" fill="#3dbdb8"/>
+        <line x1="80" y1="120" x2="170" y2="70" stroke="#3dbdb8" stroke-width="2"/><line x1="170" y1="70" x2="250" y2="150" stroke="#3dbdb8" stroke-width="2"/><line x1="170" y1="70" x2="140" y2="210" stroke="#3dbdb8" stroke-width="2"/><line x1="80" y1="120" x2="140" y2="210" stroke="#3dbdb8" stroke-width="2"/>
+        <circle cx="380" cy="60" r="7" fill="#3dbdb8"/><circle cx="460" cy="120" r="11" fill="#3dbdb8"/><circle cx="530" cy="55" r="5" fill="#3dbdb8"/><circle cx="410" cy="190" r="8" fill="#3dbdb8"/>
+        <line x1="380" y1="60" x2="460" y2="120" stroke="#3dbdb8" stroke-width="2"/><line x1="460" y1="120" x2="530" y2="55" stroke="#3dbdb8" stroke-width="2"/><line x1="460" y1="120" x2="410" y2="190" stroke="#3dbdb8" stroke-width="2"/>
+        <circle cx="600" cy="180" r="9" fill="#3dbdb8"/><circle cx="660" cy="120" r="6" fill="#3dbdb8"/><circle cx="640" cy="260" r="12" fill="#3dbdb8"/>
+        <line x1="600" y1="180" x2="660" y2="120" stroke="#3dbdb8" stroke-width="2"/><line x1="600" y1="180" x2="640" y2="260" stroke="#3dbdb8" stroke-width="2"/>
+      </g>
+    </svg>
+    <svg class="hero-hexagons" width="220" height="200" viewBox="0 0 220 200">
+      <polygon points="110,10 190,55 190,145 110,190 30,145 30,55" fill="none" stroke="#2a9d96" stroke-width="2"/>
+      <polygon points="80,40 140,40 170,90 140,140 80,140 50,90" fill="none" stroke="#2a9d96" stroke-width="1.5"/>
+      <polygon points="95,65 125,65 140,90 125,115 95,115 80,90" fill="none" stroke="#2a9d96" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-photo-ring">
+      <div class="hero-photo-placeholder">
+        <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)" width="40"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+      </div>
+    </div>
+    <h1 class="hero-greeting">Hi, I am <em>Your Name!</em></h1>
+    <p class="hero-subtitle">Welcome to My Academic Portfolio</p>
+    <p class="hero-description">Explore my site to learn about my<br>
+      <span class="hero-tags">Research &bull; Publications &bull; Academic Journey</span>
+    </p>
+    <p class="hero-tagline"><em>Thank you for visiting!</em></p>
+    <div class="hero-cta">
+      <a href="#about" class="btn-primary">Learn More</a>
+      <a href="#publications" class="btn-secondary">View Publications</a>
+    </div>
+  </div>
+  <a href="#about" class="scroll-arrow" aria-label="Scroll down">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </a>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section about-section">
+  <div class="container">
+    <h2 class="section-title">About</h2>
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="about-photo-frame">
+          <div class="about-photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)" width="50"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          </div>
+        </div>
+        <div class="about-social">
+          <a href="#" title="Email" class="social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg></a>
+          <a href="#" title="ORCID" class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.4 14.5H8.9V7.5h1.7v9zm3.3 0h-1.7v-5.5c0-1.4-.5-2-1.5-2h-.2V7.5h.2c2 0 3.2 1.2 3.2 3.5v5.5z"/></svg></a>
+          <a href="#" title="Google Scholar" class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg></a>
+          <a href="#" title="LinkedIn" class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zm2-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2z"/></svg></a>
+        </div>
+        <a href="#" class="btn-primary btn-resume" style="display:block;text-align:center;margin-top:1rem;">My Résumé</a>
+      </div>
+      <div class="about-right">
+        <h3 class="about-name">Your Name</h3>
+        <p class="about-position">Postdoctoral Researcher at <a href="#" class="teal-link">Your Institution</a></p>
+        <p class="about-bio">My research focuses primarily on quantum chemical calculations and in silico screenings of potential catalysts and functional materials to address real-world issues such as sustainability and energy. Specific research directions include understanding polymerization reaction mechanisms, catalysis utilizing heterogeneous support materials like metal-organic frameworks, C–H functionalization reactions relevant to pharmaceuticals and agrochemicals, as well as metal-halide perovskite materials for solar cells and lighting.</p>
+        <div class="about-interests">
+          <div class="interest-bubble teal">Catalysis</div>
+          <div class="interest-bubble rose">Perovskites</div>
+          <div class="interest-bubble gold">MOFs</div>
+        </div>
+        <div class="about-awards">
+          <div class="award-item teal">
+            <div class="award-wreath">🏅</div>
+            <div class="award-title">INSPIRE Faculty Fellowship</div>
+            <div class="award-year">2024</div>
+            <div class="award-org">DST, India</div>
+          </div>
+          <div class="award-item rose">
+            <div class="award-wreath">🏅</div>
+            <div class="award-title">Alexander von Humboldt Fellowship</div>
+            <div class="award-year">2021</div>
+            <div class="award-org">MPI-P Mainz</div>
+          </div>
+          <div class="award-item gold">
+            <div class="award-wreath">🏅</div>
+            <div class="award-title">Doctoral Dissertation Fellowship</div>
+            <div class="award-year">2019</div>
+            <div class="award-org">U of Minnesota</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="section experience-section">
+  <div class="container">
+    <h2 class="section-title">Professional Positions</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-logo"><div class="logo-placeholder">Logo</div></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <div>
+              <h3 class="timeline-org">The University of Chicago</h3>
+              <p class="timeline-role">Postdoctoral Research Associate</p>
+              <p class="timeline-advisor">Advisor: <a href="#" class="teal-link">Prof. Laura Gagliardi</a></p>
+            </div>
+            <div class="timeline-meta">
+              <span class="timeline-date">Apr 2023 – Jun 2025</span>
+              <span class="timeline-location">Chicago, IL</span>
+            </div>
+          </div>
+          <p class="timeline-subhead">Research Interests:</p>
+          <ul class="timeline-list">
+            <li>Application of multireference-based methods in catalysis</li>
+            <li>Enzyme-mimicking catalysis by MOFs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-logo"><div class="logo-placeholder">Logo</div></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <div>
+              <h3 class="timeline-org">Max Planck Institute for Polymer Research</h3>
+              <p class="timeline-role">Humboldt Postdoctoral Fellow</p>
+              <p class="timeline-advisor">Group Leader: <a href="#" class="teal-link">Dr. Denis Andrienko</a></p>
+            </div>
+            <div class="timeline-meta">
+              <span class="timeline-date">Sep 2020 – Apr 2023</span>
+              <span class="timeline-location">Mainz, Germany</span>
+            </div>
+          </div>
+          <p class="timeline-subhead">Research Interests:</p>
+          <ul class="timeline-list">
+            <li>Metal-halide perovskite nanocrystals</li>
+            <li>2D organic/inorganic hybrid perovskites</li>
+            <li>Nanographene/graphene heterostructures</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-logo"><div class="logo-placeholder">Logo</div></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <div>
+              <h3 class="timeline-org">CSIR-National Chemical Laboratory</h3>
+              <p class="timeline-role">Research Intern</p>
+              <p class="timeline-advisor">Advisor: <a href="#" class="teal-link">Prof. Debashree Ghosh</a></p>
+            </div>
+            <div class="timeline-meta">
+              <span class="timeline-date">Jan 2015 – Jun 2015</span>
+              <span class="timeline-location">Pune, India</span>
+            </div>
+          </div>
+          <p class="timeline-subhead">Research Project:</p>
+          <ul class="timeline-list">
+            <li>Computed ionization potentials of building-blocks of eumelanin to estimate its ionization threshold</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" class="section research-section">
+  <div class="container">
+    <h2 class="section-title">Research Interests</h2>
+    <div class="research-filter" id="researchFilter">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="polymers">Polymers</button>
+      <button class="filter-btn" data-filter="perovskites">Perovskites</button>
+      <button class="filter-btn" data-filter="mofs">MOFs</button>
+      <button class="filter-btn" data-filter="catalysis">Catalysis</button>
+    </div>
+    <div class="research-grid" id="researchGrid">
+      <div class="research-card" data-category="polymers">
+        <div class="research-img-placeholder">Research Image</div>
+        <div class="research-body">
+          <div class="research-tag-label"><span class="rtag teal">Poly</span><h3 class="research-title">Polymers</h3></div>
+          <p class="research-desc">Plastic pollution is a major environmental concern. Our research aims to better understand the mechanisms of ring-opening polymerization (ROP) and develop faster, more efficient catalysts toward making bioplastics commercially viable.</p>
+          <div class="research-tags"><span class="pill">Polymers</span><span class="pill">Bioplastic</span><span class="pill">Catalyst Screening</span></div>
+          <a href="#" class="btn-read-more">Read More</a>
+        </div>
+      </div>
+      <div class="research-card" data-category="perovskites">
+        <div class="research-img-placeholder">Research Image</div>
+        <div class="research-body">
+          <div class="research-tag-label"><span class="rtag rose">PVK</span><h3 class="research-title">Perovskites</h3></div>
+          <p class="research-desc">Metal-halide perovskites have gained significant attention for solar cells and LEDs. Our research focuses on improving exciton generation efficiency in bulk perovskites and enhancing charge transport between perovskite nanocrystals.</p>
+          <div class="research-tags"><span class="pill">Perovskites</span><span class="pill">Nanocrystal</span><span class="pill">2D Layered PVK</span></div>
+          <a href="#" class="btn-read-more">Read More</a>
+        </div>
+      </div>
+      <div class="research-card" data-category="catalysis">
+        <div class="research-img-placeholder">Research Image</div>
+        <div class="research-body">
+          <div class="research-tag-label"><span class="rtag gold">PCET</span><h3 class="research-title">Proton-Coupled Electron Transfer</h3></div>
+          <p class="research-desc">We utilize theoretical techniques such as total dipole moment vector analysis and intrinsic bond orbital visualization to distinguish between hydrogen-atom transfer (HAT) and concerted proton-coupled electron transfer (cPCET) mechanisms.</p>
+          <div class="research-tags"><span class="pill">PCET</span><span class="pill">HAT</span><span class="pill">Copper(III)</span></div>
+          <a href="#" class="btn-read-more">Read More</a>
+        </div>
+      </div>
+      <div class="research-card" data-category="mofs">
+        <div class="research-img-placeholder">Research Image</div>
+        <div class="research-body">
+          <div class="research-tag-label"><span class="rtag teal">MOF</span><h3 class="research-title">Metal-Organic Frameworks</h3></div>
+          <p class="research-desc">Our research explores enzyme-mimicking catalysis by MOFs and post-synthetic modification to introduce metal-sulfur active sites for hydrogenation and C–H activation, combining multireference computational methods with experimental collaborations.</p>
+          <div class="research-tags"><span class="pill">MOFs</span><span class="pill">Catalysis</span><span class="pill">Post-Synthetic</span></div>
+          <a href="#" class="btn-read-more">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications" class="section publications-section">
+  <div class="container">
+    <h2 class="section-title">All Publications</h2>
+    <div class="pub-filter" id="pubFilter">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="polymer-chemistry">Polymer Chemistry</button>
+      <button class="filter-btn" data-filter="perovskites">Perovskites</button>
+      <button class="filter-btn" data-filter="bio-inorganic">Bio-Inorganic</button>
+      <button class="filter-btn" data-filter="mofs">MOFs</button>
+      <button class="filter-btn" data-filter="ch-functionalization">C–H Functionalization</button>
+    </div>
+    <div class="pub-list" id="pubList">
+      <div class="pub-card" data-category="mofs">
+        <div class="pub-number">2</div>
+        <div class="pub-main">
+          <div class="pub-meta-top"><span class="pub-date">July 24, 2025</span></div>
+          <h3 class="pub-title">Introducing Metal-Sulfur Active Sites in Metal-Organic Frameworks via Post-Synthetic Modification for Hydrogenation Catalysis</h3>
+          <p class="pub-journal"><em>Nat. Chem.</em> 2025, <em>17</em>, 1514.</p>
+          <p class="pub-authors"><strong>Your Name, M.</strong>; Coauthor, A.; Another, B.; et al.</p>
+          <p class="pub-synopsis"><span class="synopsis-label">Synopsis:</span> Catalytic efficiency (hydrogenation) of a MOF is enhanced by embedding metal-sulfur active sites through post-synthetic modification.</p>
+          <div class="pub-actions">
+            <button class="btn-pub" onclick="copyBibTeX(this,'pub2')">Copy Citation</button>
+            <button class="btn-pub btn-takeaway" onclick="toggleTakeaway(this)">Key Takeaways</button>
+            <a href="#" class="btn-pub btn-publisher">View at Publisher's</a>
+            <a href="#" class="btn-pub btn-readmore">Read More</a>
+          </div>
+          <div class="pub-takeaway hidden">
+            <p>1. Metal-sulfur sites can be post-synthetically introduced into MOFs.<br>2. The resulting catalyst shows enhanced hydrogenation activity.<br>3. Computational analysis supports the proposed mechanism.</p>
+          </div>
+        </div>
+        <div class="pub-img"><div class="pub-img-placeholder">Graphical<br>Abstract</div></div>
+      </div>
+      <div class="pub-card" data-category="perovskites">
+        <div class="pub-number">1</div>
+        <div class="pub-main">
+          <div class="pub-meta-top"><span class="pub-date">Jun 6, 2025</span></div>
+          <h3 class="pub-title">Charge Carrier Transport in Two-Dimensional Benzimidazole-Based Perovskites</h3>
+          <p class="pub-journal"><em>Mater. Horiz.</em> 2025, <em>12</em>, 6812.</p>
+          <p class="pub-authors">Wang, L.; <strong>Your Name, M.</strong>; Hao, W.; et al.</p>
+          <p class="pub-synopsis"><span class="synopsis-label">Synopsis:</span> 2D tin-based perovskite semiconductors exhibit a dual transport mechanism where charge carriers follow band-like transport on the nanoscale but hopping transport on the macroscale.</p>
+          <div class="pub-actions">
+            <button class="btn-pub" onclick="copyBibTeX(this,'pub1')">Copy Citation</button>
+            <button class="btn-pub btn-takeaway" onclick="toggleTakeaway(this)">Key Takeaways</button>
+            <a href="#" class="btn-pub btn-publisher">View at Publisher's</a>
+            <a href="#" class="btn-pub btn-readmore">Read More</a>
+          </div>
+          <div class="pub-takeaway hidden">
+            <p>1. 2D perovskites show dual transport mechanisms at different length scales.<br>2. Hydrogen bonding between organic/inorganic layers is crucial for mobility.<br>3. THz spectroscopy reveals nanoscale band-like transport.</p>
+          </div>
+        </div>
+        <div class="pub-img"><div class="pub-img-placeholder">Graphical<br>Abstract</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="section blog-section">
+  <div class="container">
+    <h2 class="section-title">Blog</h2>
+    <p class="section-subtitle">Thoughts on research, science communication, and academic life.</p>
+    <div class="blog-grid">
+      <article class="blog-card">
+        <div class="blog-img-placeholder" style="background:linear-gradient(135deg,#e8f8f7,#c8e8e6);">Post Image</div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="pill">Research</span><span class="pill">Computational Chemistry</span></div>
+          <h3 class="blog-title"><a href="#">Getting Started with Multireference Methods: A Practical Guide</a></h3>
+          <p class="blog-excerpt">A beginner-friendly overview of when and why you should reach for multireference methods in your quantum chemistry calculations...</p>
+          <div class="blog-footer">
+            <span class="blog-date">January 15, 2025</span>
+            <a href="#" class="blog-read-more">Read More →</a>
+          </div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-img-placeholder" style="background:linear-gradient(135deg,#fdf0f2,#f5d5da);">Post Image</div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="pill">Academia</span><span class="pill">Career</span></div>
+          <h3 class="blog-title"><a href="#">Reflections on a Postdoctoral Fellowship: Lessons Learned</a></h3>
+          <p class="blog-excerpt">Three years into my postdoc journey, I share what I wish I had known earlier and what has made the experience truly rewarding...</p>
+          <div class="blog-footer">
+            <span class="blog-date">November 3, 2024</span>
+            <a href="#" class="blog-read-more">Read More →</a>
+          </div>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-img-placeholder" style="background:linear-gradient(135deg,#fdf8ec,#f5e5be);">Post Image</div>
+        <div class="blog-body">
+          <div class="blog-tags"><span class="pill">MOFs</span><span class="pill">Materials Science</span></div>
+          <h3 class="blog-title"><a href="#">Why Metal-Organic Frameworks Are the Swiss Army Knives of Chemistry</a></h3>
+          <p class="blog-excerpt">MOFs are often called the most versatile materials in chemistry. Here's an accessible explanation of what makes them so special...</p>
+          <div class="blog-footer">
+            <span class="blog-date">August 22, 2024</span>
+            <a href="#" class="blog-read-more">Read More →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Professional Positions</a></li>
+        <li><a href="#research">Research Interests</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#blog">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact me:</h4>
+      <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="footer-icon"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg> your.email@institution.edu</p>
+      <p><svg viewBox="0 0 24 24" fill="currentColor" class="footer-icon"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zm2-6a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2z"/></svg> Your Name</p>
+    </div>
+  </div>
+  <div class="footer-bottom">Copyright &copy; 2026 Your Name &mdash; All Rights Reserved</div>
+</footer>
+
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+  updateActiveLink();
+});
+
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+
+function updateActiveLink() {
+  const sections = document.querySelectorAll('.section');
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+}
+
+document.getElementById('researchFilter').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn'); if(!btn) return;
+  document.querySelectorAll('#researchFilter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  document.querySelectorAll('#researchGrid .research-card').forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.category !== f));
+});
+
+document.getElementById('pubFilter').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn'); if(!btn) return;
+  document.querySelectorAll('#pubFilter .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  document.querySelectorAll('#pubList .pub-card').forEach(c => c.classList.toggle('hidden', f !== 'all' && c.dataset.category !== f));
+});
+
+function toggleTakeaway(btn) {
+  const tw = btn.closest('.pub-main').querySelector('.pub-takeaway');
+  tw.classList.toggle('hidden');
+  btn.textContent = tw.classList.contains('hidden') ? 'Key Takeaways' : 'Hide Takeaways';
+}
+
+const citations = {
+  pub1: '@article{yourname2025perovskites,\n  title={Charge Carrier Transport in Two-Dimensional Benzimidazole-Based Perovskites},\n  author={Wang, L. and Your Name, M. et al.},\n  journal={Mater. Horiz.}, volume={12}, pages={6812}, year={2025}\n}',
+  pub2: '@article{yourname2025mofs,\n  title={Introducing Metal-Sulfur Active Sites in MOFs via Post-Synthetic Modification},\n  author={Your Name, M. et al.},\n  journal={Nat. Chem.}, volume={17}, pages={1514}, year={2025}\n}'
+};
+function copyBibTeX(btn, id) {
+  navigator.clipboard.writeText(citations[id] || '').then(() => {
+    const orig = btn.textContent; btn.textContent = 'Copied!';
+    btn.style.cssText = 'background:var(--teal);color:#fff;border-color:var(--teal)';
+    setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; }, 2000);
+  });
+}
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }});
+}, {threshold: 0.08});
+document.querySelectorAll('.timeline-item,.research-card,.pub-card,.blog-card').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(20px)'; el.style.transition='opacity .5s ease,transform .5s ease';
+  obs.observe(el);
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+  });
+});
+</script>
+</body>
+</html>
